@@ -1,6 +1,7 @@
 import telebot
 import random
 from telebot import types
+from glob import glob 
 
 f = open('telegrambot/fact.txt', 'r', encoding='UTF-8')
 facts = f.read().split('.')
@@ -19,6 +20,7 @@ mygift = {'Складная туристическая газовая горел
 'Xiaomi Умная лампочка Mijia Display Light Lamp (черный)' : 'https://ozon.ru/t/8xrbQJg',
 'Бутылка для воды(любая, от литра)' : 'https://ozon.ru/t/R1b2YpB',
 'Льюис Хэмилтон со шлемом' : 'https://funkopoprussia.com/serials/racing/lewis-hamilton-with-helmet-funko-pop.html'}
+
 
 # Создаем экземпляр бота
 bot = telebot.TeleBot('7877815828:AAGzxRbe_crUiyRBp2esLbFQbmaDYKhEfXY')
@@ -88,8 +90,10 @@ def get_text_messages(message):
     elif message.text == 'Все':
         for i in mygift:
             markup = types.InlineKeyboardMarkup()
-            btn_my_site= types.InlineKeyboardButton(text='Сылка на ОЗОН', url= mygift.get(i))
+            btn_my_site = types.InlineKeyboardButton(text='Сылка на ОЗОН', url= mygift.get(i))
+            btn2 = types.InlineKeyboardButton(text='Подарю это.')
             markup.add(btn_my_site)
+            markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)    
     elif message.text != "Когда день рождения?":
         file_name = "congratulation.txt"
@@ -99,13 +103,7 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Итересный факт')
         markup.add(btn1)
-        bot.send_message(message.from_user.id, 'Спасибо. \nВсего хорошего', reply_markup=markup)     
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    if message.text == 'Все':
-        markup = types.InlineKeyboardMarkup()
-        btn_my_site= types.InlineKeyboardButton(text='Наш сайт', url='https://habrahabr.ru')
-        markup.add(btn_my_site)
-        bot.send_message(message.chat.id, "Нажми на кнопку и перейди на наш сайт.", reply_markup = markup)    
+        bot.send_message(message.from_user.id, 'Спасибо. \nВсего хорошего', reply_markup=markup)
+        
 # Запускаем бота
 bot.polling(none_stop=True, interval=0)
