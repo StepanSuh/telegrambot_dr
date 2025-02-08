@@ -57,13 +57,6 @@ def get_text_messages(message):
         markup.add(btn4)
         markup.add(btn5)
         bot.send_message(message.from_user.id, 'Можно выбрать категории или посмотреть все варианты. \n Сылки даны на "Озон", но не являются указанием к покупке именно на этом маркетплейсе.', reply_markup=markup)
-    elif message.text == '':
-        markup = types.InlineKeyboardMarkup()
-        for i in mygift:
-            markup = types.InlineKeyboardMarkup()
-            btn1 = types.InlineKeyboardButton(text='Наш сайт', url='https://habr.com/ru/all/')
-            markup.add(btn1)
-            bot.send_message(message.from_user.id, i)
     elif message.text == 'Когда день рождения?':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Что дарить?')
