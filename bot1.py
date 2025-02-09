@@ -31,7 +31,7 @@ mygift_group = [{'Путешествия' : 'Складная туристиче
 {'Хобби' : 'Льюис Хэмилтон со шлемом'}]
 
 # Создаем экземпляр бота
-bot = telebot.TeleBot('7877815828:AAGzxRbe_crUiyRBp2esLbFQbmaDYKhEfXY')
+bot = telebot.TeleBot()
 
 # Функция, обрабатывающая команду /start
 @bot.message_handler(commands=['start'])
