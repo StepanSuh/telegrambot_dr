@@ -48,7 +48,7 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
 
-    if message.text == 'Что дарить?':
+    if message.text == 'Что дарить?' or message.text == 'Назад':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Подарю деньги')
         btn2 = types.KeyboardButton('Выбрать подарок')
@@ -61,7 +61,7 @@ def get_text_messages(message):
         btn3 = types.KeyboardButton('Спорт')
         btn4 = types.KeyboardButton('Путешествия')
         btn5 = types.KeyboardButton('Дом')
-        btn6 = types.KeyboardButton('Что дарить?')
+        btn6 = types.KeyboardButton('Назад')
         markup.add(btn1)
         markup.add(btn3, btn2)
         markup.add(btn4, btn5)
@@ -85,7 +85,7 @@ def get_text_messages(message):
     elif message.text == 'Подарю деньги':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Сгенерировать поздравление')
-        btn2 = types.KeyboardButton('Что дарить?')
+        btn2 = types.KeyboardButton('Назад')
         markup.add(btn1)
         markup.add(btn2)
         bot.send_message(message.from_user.id,  'Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения.', reply_markup=markup) #ответ бота
@@ -105,7 +105,7 @@ def get_text_messages(message):
         for i in mygift:
             markup = types.InlineKeyboardMarkup(row_width=2)
             btn_my_site = types.InlineKeyboardButton(text='Сылка', url= mygift.get(i))
-            btn2 = types.InlineKeyboardButton(text="Подарю это.", callback_data = 'Выбрать')
+            btn2 = types.InlineKeyboardButton(text="Забронировать", callback_data = "Выбрать")
             markup.add(btn_my_site)
             markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)
@@ -115,7 +115,7 @@ def get_text_messages(message):
         for i in res:
             markup = types.InlineKeyboardMarkup(row_width=2)
             btn_my_site = types.InlineKeyboardButton(text='Сылка', url= mygift.get(i))
-            btn2 = types.InlineKeyboardButton(text="Подарю это.", callback_data = 'Выбрать')
+            btn2 = types.InlineKeyboardButton(text="Забронировать", callback_data = 'Выбрать')
             markup.add(btn_my_site)
             markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)
@@ -125,7 +125,7 @@ def get_text_messages(message):
         for i in res:
             markup = types.InlineKeyboardMarkup(row_width=2)
             btn_my_site = types.InlineKeyboardButton(text='Сылка', url= mygift.get(i))
-            btn2 = types.InlineKeyboardButton(text="Подарю это.", callback_data = 'Выбрать')
+            btn2 = types.InlineKeyboardButton(text="Забронировать", callback_data = 'Выбрать')
             markup.add(btn_my_site)
             markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)
@@ -135,7 +135,7 @@ def get_text_messages(message):
         for i in res:
             markup = types.InlineKeyboardMarkup(row_width=2)
             btn_my_site = types.InlineKeyboardButton(text='Сылка', url= mygift.get(i))
-            btn2 = types.InlineKeyboardButton(text="Подарю это.", callback_data = 'Выбрать')
+            btn2 = types.InlineKeyboardButton(text="Забронировать", callback_data = 'Выбрать')
             markup.add(btn_my_site)
             markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)
@@ -145,7 +145,7 @@ def get_text_messages(message):
         for i in res:
             markup = types.InlineKeyboardMarkup(row_width=2)
             btn_my_site = types.InlineKeyboardButton(text='Сылка', url= mygift.get(i))
-            btn2 = types.InlineKeyboardButton(text="Подарю это.", callback_data = 'Выбрать')
+            btn2 = types.InlineKeyboardButton(text="Забронировать", callback_data = 'Выбрать')
             markup.add(btn_my_site)
             markup.add(btn2)
             bot.send_message(message.chat.id, i, reply_markup = markup)                        
@@ -158,6 +158,13 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton('Итересный факт')
         markup.add(btn1)
         bot.send_message(message.from_user.id, 'Спасибо. \nВсего хорошего', reply_markup=markup)
-        
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.data ==  'Выбрать':
+        bot.answer_callback_query(call.id, show_alert=True, text="Вы забронировали подарок. \nТеперь он пропал из поиска у других пользователей. ")
+        bot.send_message(call.message.chat.id, "Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения.")
+
+
+
 # Запускаем бота
 bot.polling(none_stop=True, interval=0)
