@@ -118,7 +118,7 @@ def get_text_messages(message):
         markup.add(btn3, btn2)
         markup.add(btn4, btn5)
         markup.add(btn6)
-        bot.send_message(message.from_user.id, 'Можно выбрать категории или посмотреть все варианты. \n Сылки даны на "Озон", но не являются указанием к покупке именно на этом маркетплейсе.', reply_markup=markup)
+        bot.send_message(message.from_user.id, 'Можно выбрать категории или посмотреть все варианты. \n Ссылки даны на "Озон", но не являются указанием к покупке именно на этом маркетплейсе.', reply_markup=markup)
     elif message.text == 'Когда день рождения?':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Что дарить?')
@@ -140,13 +140,7 @@ def get_text_messages(message):
         btn2 = types.KeyboardButton('Назад')
         markup.add(btn1)
         markup.add(btn2)
-        bot.send_message(message.from_user.id,  'Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения.', reply_markup=markup) #ответ бота
-    elif message.text == 'Выбрать':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
-        btn1 = types.KeyboardButton('Выбрать другой')
-        btn2 = types.KeyboardButton('Подтвердить')
-        markup.add(btn1, btn2,)
-        bot.send_message(message.from_user.id, 'Вы выбрали подарок. Если нажмете подтвердить, он пропадет из выбора у других людей и никто не сможет его купить.', reply_markup=markup)
+        bot.send_message(message.from_user.id, "Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения. \nЧто бы сгенирировать поздравление нажмите \U000025B6/gen \nВыбери из понравившихся вариантов, скопируй нажав на текст и вставь в строку написания сообщения или придумай свое.", reply_markup=markup) #ответ бота
     elif message.text == 'Сгенерировать поздравление':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
         btn1 = types.KeyboardButton('Сгенерировать поздравление')
@@ -236,8 +230,8 @@ def callback_inline(call):
             with open(file_name, 'a', encoding='utf-8') as log_file:
                 log_file.write(f"{user_id} | {key}\n")
             bot.answer_callback_query(call.id, show_alert=True, text="Вы забронировали подарок. \nТеперь он пропал из поиска у других пользователей. ")
-            bot.send_message(call.message.chat.id, "Забронированный выми подарок\U00002935 \nДля того чобы отменить бронь, напишите в строке вода: /add ссылка на товар и стоимость через пробел без указания валюты " + key)
-        bot.send_message(call.message.chat.id, "Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения. \nЧто бы сгенирировать поздравление нажмите \U000025B6/gen")
+            bot.send_message(call.message.chat.id, "Забронированный выми подарок\U00002935 \nДля того, чтобы отменить бронь, напишите в строке ввода: /add ссылка на товар и стоимость через пробел без указания валюты " + key)
+        bot.send_message(call.message.chat.id, "Отлично! \nЕще тут можно оставить приятное поздравление, которое именинник сможет прочесть в свой день рождения. \nЧто бы сгенирировать поздравление нажмите \U000025B6/gen \nВыбери из понравившихся вариантов, скопируй нажав на текст и вставь в строку написания сообщения или придумай свое.'")
         with open(DATABASE_FILE, 'w') as f:
              json.dump(mygift, f)
 
